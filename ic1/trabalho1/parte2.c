@@ -3,6 +3,7 @@
     Gabriel Carvalho Silva
 */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,31 +11,37 @@
 int main()
 {
 
-    srand(time(0)); /*Gera a semente para o numero aleatorio*/
-    int numSecreto = rand() % 101; /*Declaracao do numero a ser adivinhado*/
-    printf("o numero secreto eh %d\n", numSecreto);
-    
-    int palpite, tentativas = 1;
+    srand(time(0)); /*Generates the seed for the random number*/
+    int secretNumber = rand() % 101; /*Secret Number Declaration and Generation*/
 
-    printf("Um numero secreto de 0 a 100 foi escolhido!\nDescubra qual numero eh dando palpites!\n");
+    
+    int usrGuess, usrAttempts = 1; /*a variable to store each guess the user makes and another for how many guesses the user makes*/
+
+    /*Welcome message*/
+    printf("A secret number between 0 and 100 was selected.\nTo win this game, find out which number it is!\n"); 
+    
+    /*The program loop. It only stops when the user manages to guess the secret number*/
     do
     {
-        printf("De um palpite: ");
-        scanf("%d", &palpite);
+        /*reads the user guess*/
+        printf("Your guess: ");
+        scanf("%d", &usrGuess);
 
-        if(palpite != numSecreto){
-            tentativas++;
-            if(palpite > numSecreto){
-                printf("O numero secreto eh menor que o seu palpite!\n");
+        if(usrGuess != secretNumber){
+            /*if the user miss the right number, the next attempt will be counted*/
+            usrAttempts++;
+            /*Then, a hint stating whether the secret number is smaller or greater than the guessed number will appear*/
+            if(usrGuess > secretNumber){
+                printf("The secret number is smaller than the one you guessed!Try again\n");
             } else{
-                printf("O numero secreto eh maior que o seu palpite!\n");
+                printf("The secret number is greater than the one you guessed!Try again\n");
             }
         
         }
 
-    } while (palpite != numSecreto);
+    } while (usrGuess != secretNumber);
 
-    printf("\nParabens voce acertou o numero secreto!\nNumero de tentativas: %d\n\n", tentativas);
+    printf("\nCongratulations, you guessed it right!\nNumber of attempts: %d\n\n", usrAttempts);
     
     return 0;
 }

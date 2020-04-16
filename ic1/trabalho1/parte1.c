@@ -6,223 +6,232 @@
 #include <stdio.h>
 #include <math.h>
 
+
 int main(){
 	
-	int usrOption, isOperandsDefined = 0, i;
-	double operands[5];
+	int usrOption; /*Variable to hold the selected menu option*/
+	int isOperandsDefined = 0; /*Variable for boolean test to know whether the user entered the operands values or not*/
+	int i; /*just an auxiliary variable for counting*/
+	double operands[5] = {0}; /*An array containing the operands*/
 	
-	/*program loop*/
+	/*program loop, exits when usrOption equals 0*/
 	do{
 
 		/*Menu*/
-		puts("\n\n[1] - Inserir valores para calculo");
-		puts("[2] - Media Simples");
-		puts("[3] - Media Ponderada");
-		puts("[4] - Desvio Padrao");
-		puts("[5] - Maior Numero");
-		puts("[6] - Menor Numero");
-		puts("[0] - Encerrar programa");
-		printf("Escolha uma das operacoes acima: ");
+		puts("\n\n[1] - Define the operands values");
+		puts("[2] - Simple Mean");
+		puts("[3] - Weighted Mean");
+		puts("[4] - Standard Deviation");
+		puts("[5] - Biggest Number");
+		puts("[6] - Smallest Number");
+		puts("[0] - Finish the application");
+		printf("Choose one of the options above: ");
 		scanf("%d", &usrOption);
 
-		/*Operacoes*/
+		/*Operations*/
 
 		switch (usrOption)
 		{
-			/*Encerrar o programa*/
+			/*Finishes the application*/
 			case 0:
 				break;
 			
-			/*inserir valores*/
+			/*Define values for the operands*/
 			case 1:
 				
-				printf("\nInsira os valores dos operandos: ");
+				printf("\nInsert the values for the operands: ");
 				for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
 				isOperandsDefined = 1;
 				
 				break;
 			
-			/*Media simples*/
+			/*Simple Mean*/
 			case 2:
 			
 				if(isOperandsDefined == 1){
-					/*basta efetuar a operacao*/
-					double media, soma = 0;
-					for(i = 0; i < 5; i++) soma += operands[i];
-					media = soma / 5.0;
+					/*If the operands are already defined by the user, the program will just perform the operation*/
+					double mean, sum = 0;
+					for(i = 0; i < 5; i++) sum += operands[i];
+					mean = sum / 5.0;
 
-					printf("\nMedia Simples eh: %.2lf\n", media);
+					printf("\nThe Simples Mean is: %.2lf\n", mean);
 				} else{
-					/*pedir valores antes de calcular*/
+					/*If the operands are not defined, then the application requests the user to do so*/
 
-					printf("\nInsira os valores dos operandos: ");
+					printf("\nInsert the values for the operands: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
-					isOperandsDefined = 1;
+					isOperandsDefined = 1; /*Define as True for possible future operations*/
 
-					/*agora sim efetua a operacao*/
-					double media, soma = 0;
-					for(i = 0; i < 5; i++) soma += operands[i];
-					media = soma / 5.0;
+					/*And afterwards performs the operation*/
+					double mean, sum = 0;
+					for(i = 0; i < 5; i++) sum += operands[i];
+					mean = sum / 5.0;
 
-					printf("\nMedia Simples eh: %.2lf\n", media);
+					printf("\nThe Simples Mean is: %.2lf\n", mean);
 				}
 			
 				break;
 			
-			/*Media Ponderada*/
+			/*Weighted Mean*/
 			case 3:
 				if(isOperandsDefined == 1){
-					/*basta efetuar a operacao*/
-					double weights[5], media, somaFatores = 0, somaPesos = 0;
-					printf("Insira os pesos dos operandos, respectivamente: ");
+					/*If the operands are already defined by the user, the program will just perform the operation*/
+					double weights[5] = {0}, mean, sumOperandsTimesWeights = 0, sumWeights = 0;
+					printf("Insert the values for the weights, respectively: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &weights[i]);
 					
-					for(i = 0; i < 5; i++) somaPesos += weights[i];
-					for(i = 0; i < 5; i++) somaFatores += operands[i] * weights[i];
+					for(i = 0; i < 5; i++) sumWeights += weights[i];
+					for(i = 0; i < 5; i++)
+						sumOperandsTimesWeights += operands[i] * weights[i]; /*sum of the factors of the mean, where each factor is an operand times its weight*/
 
-					media = somaFatores / somaPesos;
+					mean = sumOperandsTimesWeights / sumWeights;
 
-					printf("\nMedia Ponderada eh: %.2lf\n", media);
+					printf("\nThe Weighted Mean is: %.2lf\n", mean);
 					
 
 				} else{
-					/*pedir valores antes de calcular*/
+					/*If the operands are not defined, then the application requests the user to do so*/
 
-					printf("Insira os valores dos operandos: ");
+					printf("\nInsert the values for the operands: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
-					isOperandsDefined = 1;
+					isOperandsDefined = 1; /*Define as True for possible future operations*/
 
-					/*agora sim efetua a operacao*/
-					double weights[5], media, somaFatores = 0, somaPesos = 0;
-					printf("Insira os pesos dos operandos, respectivamente: ");
+					/*And afterwards performs the operation*/
+					double weights[5] = {0}, mean, sumOperandsTimesWeights = 0, sumWeights = 0;
+					printf("Insert the values for the weights, respectively: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &weights[i]);
 					
-					for(i = 0; i < 5; i++) somaPesos += weights[i];
-					for(i = 0; i < 5; i++) somaFatores += operands[i] * weights[i];
+					for(i = 0; i < 5; i++) sumWeights += weights[i];
+					for(i = 0; i < 5; i++) sumOperandsTimesWeights += operands[i] * weights[i]; /*sum of the factors of the mean, where each factor is an operand times its weight*/
 
-					media = somaFatores / somaPesos;
+					mean = sumOperandsTimesWeights / sumWeights;
 
-					printf("\nMedia Ponderada eh: %.2lf\n", media);
+					printf("\nThe Weighted Mean is: %.2lf\n", mean);
 				}
 
 				break;
 
-			/*Desvio Padrao*/
+			/*Standard Deviation*/
 			case 4:
 				if(isOperandsDefined == 1){
-					/*basta efetuar a operacao*/
+					/*If the operands are already defined by the user, the program will just perform the operation*/
 					double stdDeviation, sumQrtDifference = 0, media, soma = 0;
-					/*calculo da media*/
+					
+					/*The 'for' loop calculates the mean of the dataset*/
 					for(i = 0; i < 5; i++) soma += operands[i];
 					media = soma / 5.0;
 
-					/*calculo da soma dos quadrados das diferencas entre operands[i] e media*/
+					/*Calculation of the sum of the squared differences between each operand and the mean*/
 
 					for(i = 0; i < 5; i++) sumQrtDifference += pow((operands[i]-media),2);
 					
-					stdDeviation = sqrt(sumQrtDifference/4);
+					stdDeviation = sqrt(sumQrtDifference/4.0); /*Following the formula of the sample standard deviation, the denominator is given by the number of elements in the dataset minus 5. Therefore, 5-1 = 4*/
 
-					printf("\nDesvio Padrao eh: %.2lf\n", stdDeviation);
+					printf("\nThe Standard Deviation is: %.2lf\n", stdDeviation);
 
 
 				} else{
-					/*pedir valores antes de calcular*/
+					/*If the operands are not defined, then the application requests the user to do so*/
 
-					printf("Insira os valores dos operandos: ");
+					printf("\nInsert the values for the operands: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
-					isOperandsDefined = 1;
+					isOperandsDefined = 1; /*Define as True for possible future operations*/
 
-					/*agora sim efetua a operacao*/
+					/*And afterwards performs the operation*/
 					double stdDeviation, sumQrtDifference = 0, media, soma = 0;
 					/*calculo da media*/
 					for(i = 0; i < 5; i++) soma += operands[i];
 					media = soma / 5.0;
 
-					/*calculo da soma dos quadrados das diferencas entre operands[i] e media*/
+					/*Calculation of the sum of the squared differences between each operand and the mean*/
 
 					for(i = 0; i < 5; i++) sumQrtDifference += pow((operands[i]-media),2);
-					
-					stdDeviation = sqrt(sumQrtDifference/4.0);
 
-					printf("\nDesvio Padrao eh: %.2lf\n", stdDeviation);
+					stdDeviation = sqrt(sumQrtDifference / 4.0); /*Following the formula of the sample standard deviation, the denominator is given by the number of elements in the dataset minus 5. Therefore, 5-1 = 4*/
+
+					printf("\nThe Standard Deviation is: %.2lf\n", stdDeviation);
 				}
 
 				break;
 
-			/*Maior Numero*/
+			/*Biggest Number*/
 			case 5:
 				if(isOperandsDefined == 1){
-					/*basta efetuar a operacao*/
-					double maior;
-					
+					/*If the operands are already defined by the user, the program will just perform the operation*/
+					double biggestNumber = operands[0];
+
+					/*the first operand in the array will be compared to the other operands until a bigger one is found, this operand will replace the first operand and be compared to the next operands repeating the process*/
 					for(i = 0; i < 5; i++)  
-						if(operands[i] > maior) 
-							maior = operands[i];
+						if(operands[i] > biggestNumber) 
+							biggestNumber = operands[i];
 
-					printf("\nO maior eh: %.2lf\n", maior);
+					printf("\nThe Biggest Number is: %.2lf\n", biggestNumber);
 				} else{
-					/*pedir valores antes de calcular*/
+					/*If the operands are not defined, then the application requests the user to do so*/
 
-					printf("Insira os valores dos operandos: ");
+					printf("\nInsert the values for the operands: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
-					isOperandsDefined = 1;
+					isOperandsDefined = 1; /*Define as True for possible future operations*/
 
-					/*agora sim efetua a operacao*/
-					double maior = operands[0];
+					/*And afterwards performs the operation*/
+					double biggestNumber = operands[0];
 					
+					/*the first operand in the array will be compared to the other operands until a bigger one is found, this operand will replace the first operand and be compared to the next operands repeating the process*/
 					for(i = 0; i < 5; i++)  
-						if(operands[i] > maior) 
-							maior = operands[i];
+						if(operands[i] > biggestNumber) 
+							biggestNumber = operands[i];
 
-					printf("\nO maior eh: %.2lf\n", maior);
+					printf("\nThe Biggest Number is: %.2lf\n", biggestNumber);
 				}
 
 				break;
 			
-			/*Menor Numero*/
+			/*Smallest Number*/
 			case 6:
 				if(isOperandsDefined == 1){
-					/*basta efetuar a operacao*/
-					double menor = operands[0];
+					/*If the operands are already defined by the user, the program will just perform the operation*/
+					double smallestNumber = operands[0];
 
+					/*the first operand in the array will be compared to the other operands until a bigger one is found, this operand will replace the first operand and be compared to the next operands repeating the process*/
 					for(i = 0; i < 5; i++)  
-						if(operands[i] < menor) 
-							menor = operands[i];
+						if(operands[i] < smallestNumber) 
+							smallestNumber = operands[i];
 
-					printf("\nO menor eh: %.2lf\n", menor);
+					printf("\nThe Smallest Number is: %.2lf\n", smallestNumber);
 				} else{
-					/*pedir valores antes de calcular*/
+					/*If the operands are not defined, then the application requests the user to do so*/
 
-					printf("Insira os valores dos operandos: ");
+					printf("\nInsert the values for the operands: ");
 					for(i = 0; i < 5; i++) scanf("%lf", &operands[i]);
 
-					isOperandsDefined = 1;
+					isOperandsDefined = 1; /*Define as True for possible future operations*/
 
-					/*agora sim efetua a operacao*/
-					double menor = operands[0];
-
+					/*And afterwards performs the operation*/
+					double smallestNumber = operands[0];
+					
+					/*the first operand in the array will be compared to the other operands until a bigger one is found, this operand will replace the first operand and be compared to the next operands repeating the process*/
 					for(i = 0; i < 5; i++)  
-						if(operands[i] < menor) 
-							menor = operands[i];
+						if(operands[i] < smallestNumber) 
+							smallestNumber = operands[i];
 
-					printf("\nO menor eh: %.2lf\n", menor);
+					printf("\nThe Smallest Number is: %.2lf\n", smallestNumber);
 				}
 
 				break;
 			
-			/*Qualquer numero que nao os do menu*/
+			/*Any value other than those defined in the menu will lead the user back to the menu*/
 			default:
 				printf("\n\aOpcao invalida! Voltando ao menu...\n\n");
 				break;
 		}
 
 		
-	}while(usrOption != 0);
+	}while(usrOption != 0); /*evaluates if the program should continue*/
 
-	return 0;
+	return 0; /*Execution Endpoint*/
 }
