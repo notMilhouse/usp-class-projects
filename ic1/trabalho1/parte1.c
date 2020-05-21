@@ -18,7 +18,7 @@ int main(){
 	do{
 
 		/*Menu*/
-		puts("\n\n[1] - Define the operands values");
+		puts("\n\n[1] - Define the operands values"); 
 		puts("[2] - Simple Mean");
 		puts("[3] - Weighted Mean");
 		puts("[4] - Standard Deviation");
