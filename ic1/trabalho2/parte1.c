@@ -19,17 +19,15 @@ int main(void) {
 //e retorna o local na superstring em que foi encontrada a substring ou zero
 int AcharSubString(char *SuperString, char *SubString)
 {
-	int Stack[2] = {0};
+	int Stack;
 	//Stack[0] indica se a substring foi encontrada na superstring
 	//stack[1] indica o indice atual dentro da superstring
 	
 	//laço que navega pelos indices na superstring
 	for(int i = 0; *(SuperString + i) != '\0'; i++)
 	{
-		Stack[0] = 1;
+		Stack = 1;
 		//assumimos que a substring será encontrada no indice atual
-		Stack[1] = i;
-		//atualiza o indice atual
 		
 		//laço que navega pelos indices da substring
 		for(int j = 0; *(SubString + j) != '\0'; j++)
@@ -40,7 +38,7 @@ int AcharSubString(char *SuperString, char *SubString)
 			if(*(SuperString+i+j) != *(SubString+j)) 
 			{
 				//sabemos que a substring não foi encontrada no indice atual da superstring
-				Stack[0] = 0;
+				Stack = 0;
 				
 				//não precisamos continuar navegando pelos indices da substring pois
 				//já sabemos que a substring não condiz com a superstring do indice atual
@@ -50,10 +48,10 @@ int AcharSubString(char *SuperString, char *SubString)
 		}
 		//se a variavel ainda for 1 sabemos que todos os caracteres da superstring no indice atual
 		//são iguais aos caracteres da substring, portanto achamos o indice correspondente
-		if(Stack[0])
+		if(Stack)
 		{
 			//nesse caso retornamos o indice atual da superstring
-			return Stack[1];
+			return i;
 		}
 	}
 	//se nada for encontrado retornamos 0
