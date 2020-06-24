@@ -4,15 +4,63 @@
 
 //Prototipo da função
 int AcharSubString(char *SuperString, char *SubString);
+void Sanitizer(char *string);
 
-int main(void) {
-  char Primeira[9999] = "estava esperando esta estelar espera que es essa estrela";
+int main(void) 
+{
+  char Primeira[9999] = "estava esperando esta estelar espera que es dessa estrela";
   //string principal
-  char Segunda[999] = "essa";
+  char Segunda[999] = "       essa     ";
   //substring a ser encontrada na string principal
+  
+  //retira os espaços q talvez existam antes e depois da string
+  Sanitizer(Segunda);
+  printf("'%s'\n", Segunda);
+  
   printf("Local %d\n", AcharSubString(Primeira, Segunda));
   //printa o local que o indice da substring dentro da string principal ou zero se não for encontrada
   return 0;
+}
+
+void Sanitizer(char *string)
+{
+	short Finder[256] = {0};
+	Finder[' '] = 1;
+	char cleansedString[999];
+	int i;
+	int jumpIndex = 0;
+	int spaceStreak = 0;
+	for(i = 0; *(string + i + jumpIndex) != '\0'; i++)
+	{
+		if(!Finder[*(string + i + jumpIndex)])
+		{
+			*(cleansedString + i) = *(string + i + jumpIndex);
+			spaceStreak = 0;
+		}
+		else
+		{
+			if(i == 0)
+			{
+				jumpIndex++;
+        i--;
+			}
+			else
+			{
+        *(cleansedString + i) = *(string + i + jumpIndex);
+				spaceStreak++;
+			}
+		}
+	}
+
+  int LastIndex = i;
+	for(i = 0; i < LastIndex; i++)
+	{
+		*(string + i) = *(cleansedString + i);
+	}
+	if(spaceStreak > 0)
+	{
+		*(string + LastIndex - spaceStreak) = '\0';
+	}
 }
 
 //função tem entrada os ponteiros do indice 0 da string principal ou superstring e da substring repectivamente
