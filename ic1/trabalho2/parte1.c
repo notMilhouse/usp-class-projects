@@ -2,15 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Prototipo da função
+//Prototipo das funções
 int AcharSubString(char *SuperString, char *SubString);
 void Sanitizer(char *string);
+void Menu(short modo);
+void FlagInterpreter(char *flagString, short *flags);
 
 int main(void) 
 {
+  Menu(0); // 0 pra modo básico e 1 pra modo avançado
+  
+
+
   char Primeira[9999] = "estava esperando esta estelar espera que es dessa estrela";
   //string principal
-  char Segunda[999] = "       essa     ";
+  char Segunda[999] = "       essa    ";
   //substring a ser encontrada na string principal
   
   //retira os espaços q talvez existam antes e depois da string
@@ -20,6 +26,70 @@ int main(void)
   printf("Local %d\n", AcharSubString(Primeira, Segunda));
   //printa o local que o indice da substring dentro da string principal ou zero se não for encontrada
   return 0;
+}
+
+void Menu(short modo)
+{
+  char Primeira[9999];
+  //string principal
+  char Segunda[999];
+  //substring a ser encontrada na string principal
+  char FlagString[8] = {'\0'};
+
+
+  //Desenha GUI
+  printf("==================================\n");
+  printf("SubString Finder Thingy\n");
+  printf("Insira o texto a ser consultado [limite 9999 caracteres]:");
+  scanf(" %s", Primeira); //lê string principal
+  printf("\nInsira a palavra a ser pesquisada [limite 999 caracteres]:");
+  scanf(" %s", Segunda); //lê subString
+
+  if(modo)
+  {
+    //flags 0: -i, 1: -a, 2: -e, 3: -v
+    short Flags[4];
+    
+    printf("\nInsira as flags de busca [{-i} isolada na string][{-a} todas as ocorrencias][{-e} procurar strings separadas por espaços][{-v} feedback visual]:");
+    scanf(" %s", FlagString);
+
+    FlagInterpreter(FlagString, Flags);
+    if(!Flags[2])
+    {
+      Sanitizer(Segunda);
+    }
+    /*
+    short Casos[256] = {0};
+    Casos[' '] = 1;
+    Casos[','] = 1;
+    Casos['.'] = 1;
+    Casos[':'] = 1;
+    Casos[';'] = 1; 
+    */
+    
+  }
+
+
+}
+
+void FlagInterpreter(char *flagString, short *flags)
+{
+  if(AcharSubString(flagString, "-i"))
+  {
+    *(flags + 0) = 1;
+  }
+  if(AcharSubString(flagString, "-a"))
+  {
+    *(flags + 1) = 1;
+  }
+  if(AcharSubString(flagString, "-e"))
+  {
+    *(flags + 2) = 1;
+  }
+  if(AcharSubString(flagString, "-v"))
+  {
+    *(flags + 3) = 1;
+  }
 }
 
 void Sanitizer(char *string)
@@ -70,7 +140,7 @@ int AcharSubString(char *SuperString, char *SubString)
 	int Stack;
 	//Stack[0] indica se a substring foi encontrada na superstring
 	//stack[1] indica o indice atual dentro da superstring
-	
+
 	//laço que navega pelos indices na superstring
 	for(int i = 0; *(SuperString + i) != '\0'; i++)
 	{
@@ -80,10 +150,10 @@ int AcharSubString(char *SuperString, char *SubString)
 		//laço que navega pelos indices da substring
 		for(int j = 0; *(SubString + j) != '\0'; j++)
 		{
-        //printf("%d: %c  %c\n", i+j, *(SubString + j), *(SuperString+i+j));
+      //printf("%d: %c  %c\n", i+j, *(SubString + j), *(SuperString+i+j));
 		
 			//caso o indice atual da substring não seja igual o indice atual da superstring
-			if(*(SuperString+i+j) != *(SubString+j)) 
+			if(*(SuperString+i+j) != *(SubString+j))
 			{
 				//sabemos que a substring não foi encontrada no indice atual da superstring
 				Stack = 0;
@@ -99,7 +169,7 @@ int AcharSubString(char *SuperString, char *SubString)
 		if(Stack)
 		{
 			//nesse caso retornamos o indice atual da superstring
-			return i;
+			return i + 1;
 		}
 	}
 	//se nada for encontrado retornamos 0
